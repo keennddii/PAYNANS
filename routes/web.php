@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
-
+require __DIR__.'/auth.php';
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,9 +18,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 });
 
+//LOGIN
+Route::get('/login', function () {
+    return view('auth.login'); // Replace with your actual login view
+})->name('login');
+
 //LOGOUT
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/'); // Redirects to the login page
+    return redirect('/login'); // Redirects to the login page
 })->name('logout');
-require __DIR__.'/auth.php';
+
+
+
